@@ -15,4 +15,3 @@ class Settings:
     }
 
 settings = Settings()
-print(settings.BASE_URL)
