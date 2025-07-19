@@ -10,8 +10,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
 sys.path.append(parent_dir)
 
-from utils.logger import logger
-from config.settings import settings
+from backend.utils.logger import logger
+from backend.api.config.settings import settings
 
 class Breweries:
     def __init__(self):
@@ -21,7 +21,7 @@ class Breweries:
             'Content-Type': 'application/json'
         })
 
-    def _is_valid_api_response(self, data):
+    def _is_valid_api_response(self, data) -> bool:
         """Verifica se a resposta da API é válida (lista ou dicionário não vazio)"""
         if data is None:
             return False
@@ -71,11 +71,7 @@ class Breweries:
                 break # finish loop of pagination
                 
             logger.info(f"Page {page} collected - Total: {len(all_data)}")
-            page += 1
+            page += 1 #Increment
             time.sleep(settings.REQUEST_DELAY)
         
         return all_data
-    
-if __name__ == "__main__":
-    data = Breweries()._make_request(endpoint=settings.BASE_URL)
-    print(data)
