@@ -109,7 +109,7 @@ A arquitetura proposta é a seguinte:
 #### **3. Serviços implementados**
 
 * MiniIO > http://127.0.0.1:9001/
-* Airflow > 
-* Prometheus >
-* Streamlit >
-* MkDocs > 
+* Airflow > http://127.0.0.1:8080/
+* Prometheus > http://127.0.0.1:9090/
+* Streamlit > http://127.0.0.1:9000/
+* MkDocs > i do not
