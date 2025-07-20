@@ -3,19 +3,20 @@ name = "de-case-bees"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "imbrunoagc"}
+    {name = "imbrunoagc",email = "brunoaugusto864@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = "3.12.2"
 dependencies = [
+    "apache-airflow (>=3.0.3,<4.0.0)",
     "pandas (>=2.3.1,<3.0.0)",
     "ipykernel (>=6.29.5,<7.0.0)",
     "pyarrow (>=21.0.0,<22.0.0)",
     "requests (>=2.32.4,<3.0.0)",
     "python-dotenv (>=1.1.1,<2.0.0)",
     "pydantic (>=2.11.7,<3.0.0)",
-    "pyspark (==3.5.1)",
     "unidecode (>=1.4.0,<2.0.0)",
+    "boto3 (>=1.39.9,<2.0.0)"
 ]
 
 
