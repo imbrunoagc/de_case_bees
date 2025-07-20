@@ -203,4 +203,6 @@ __marimo__/
 .streamlit/secrets.toml
 
 # flatfiles
-data/bronze/breweries.json
+data/bronze/*.json
+data/silver/*.parquet
+data/gold/*.parquet
