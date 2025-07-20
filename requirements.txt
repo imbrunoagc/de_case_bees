@@ -1,0 +1,9 @@
+apache-airflow
+pandas
+ipykernel
+pyarrow
+requests
+python-dotenv
+pydantic
+unidecode
+boto3
