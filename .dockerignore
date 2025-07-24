@@ -1,4 +1,8 @@
-# Ignorar pastas e arquivos desnecessários
-node_modules/
-.git/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 *.log
+logs/
+.git
+.dockerignore

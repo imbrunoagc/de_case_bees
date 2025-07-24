@@ -2,8 +2,11 @@ apache-airflow
 pandas
 ipykernel
 pyarrow
+s3fs
 requests
 python-dotenv
 pydantic
 unidecode
 boto3
+duckdb==0.10.2
+loguru
