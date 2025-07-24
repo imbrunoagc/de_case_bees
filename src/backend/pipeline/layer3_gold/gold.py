@@ -8,7 +8,7 @@ parent_dir = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
 data_dir = os.path.abspath(os.path.join(current_dir, "..", "..", "..", "..", "data"))
 sys.path.append(parent_dir)
 
-from mini_io.s3_manager import PandasBucket
+from resources.s3_manager import PandasBucket
 
 def run_gold() -> None:
         

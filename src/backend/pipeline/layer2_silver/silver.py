@@ -15,12 +15,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
 data_dir = os.path.abspath(os.path.join(current_dir, "..", "..", "..", "..", "data"))
 
-from resources.duckdb_manager import create_duckdb_connection, execute_query
-from resources.s3_manager import PandasBucket
 
 sys.path.append(parent_dir)
 
-from mini_io.s3_manager import PandasBucket
+from resources.duckdb_manager import create_duckdb_connection, execute_query
+from resources.s3_manager import PandasBucket
 from pipeline.layer2_silver.tdd import validate_and_convert_to_df # import do tdd (contrato de dados)
 
 def metadata(df: pd.DataFrame) -> pd.DataFrame:
@@ -80,7 +79,10 @@ def run_silver() -> None:
             
     # leitura do conteudo json baixado
     logger.info("Lendo 'breweries.json' do bucket 'bronze'.")
-    data = PandasBucket(name="bronze").read_json(name="breweries.json")
+    data = PandasBucket(name="breweries").read_json(name="bronze/breweries.json")
+
+    logger.info("Shape do dataframe derivado do JSON." )
+    print(data.shape)
     
     # Chamada da função de vdt
     logger.info("Validando dados e convertendo para DataFrame." )
@@ -89,8 +91,6 @@ def run_silver() -> None:
         model=Brewery
     )
 
-
-    
     # remoção de duplicados
     logger.info("Removendo registros duplicados.")
     df = df.drop_duplicates(subset=['id'])

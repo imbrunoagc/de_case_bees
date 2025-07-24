@@ -25,9 +25,9 @@ services:
       sh -c "
       sleep 10 &&
       mc alias set myminio http://minio:9000 minioadmin minioadmin &&
-      mc mb myminio/bronze &&
-      mc mb myminio/silver &&
-      mc mb myminio/gold
+      mc mb myminio/breweries/bronze &&
+      mc mb myminio/breweries/silver &&
+      mc mb myminio/breweries/gold
       "
 
   postgres-airflow:

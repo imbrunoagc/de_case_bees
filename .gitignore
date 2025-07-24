@@ -210,3 +210,8 @@ data/gold/*.parquet
 
 
 src/backend/logs
+
+src/backend/airflow-webserver.pid
+src/backend/airflow.cfg
+src/backend/standalone_admin_password.txt
+src/backend/webserver_config.py

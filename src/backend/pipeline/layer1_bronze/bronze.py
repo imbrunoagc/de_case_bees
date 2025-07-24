@@ -12,4 +12,4 @@ from resources.s3_manager import PandasBucket
 
 def run_bronze():
     data = Breweries()._make_request(endpoint=settings.BASE_URL)#_fetch_paginated(endpoint=settings.BASE_URL)
-    PandasBucket(name='bronze').write_json(data=data, name='breweries.json')
+    PandasBucket(name='breweries').write_json(data=data, name='bronze/breweries.json')
