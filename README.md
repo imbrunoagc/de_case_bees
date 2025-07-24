@@ -34,11 +34,8 @@ A arquitetura proposta é a seguinte:
 * `pyproject.toml` - Configurações e dependências do projeto com Poetry. 
 * `README.md` - Documentação principal do projeto.
 * `docs/` - Documentação do projeto.
-* `notebook` - Analises pontuais em notebook
-* `src/airflow/dags/resources/` - Arquivo de conexão com o MinIO e demais funcionalidades de coleta e inserção.
-* `src/airflow/dags/scrapy/` - Arquivo principal com a respagem de dados do projeto.
-* `src/airflow/dags/` - Arquivo endereçados como Bronze, Silver e Gold, que é o core do projeto com a DAG para orquestração do processo.
-* `tests/` - Arquivo que propõe teste unitários em classes e métodos.
+* `src/backend/` - Arquivo com a construção do backend de dados.
+* `src/frontend/` - Arquivo com a construção visual da entrega final.
 
 
 ## Estrutura do Projeto

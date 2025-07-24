@@ -8,8 +8,8 @@ sys.path.append(parent_dir)
 
 from api.breweries_api import Breweries
 from api.config.settings import settings
-from mini_io.s3_manager import PandasBucket
+from resources.s3_manager import PandasBucket
 
 def run_bronze():
-    data = Breweries()._fetch_paginated(endpoint=settings.BASE_URL)
-    PandasBucket(name='bronze').write_json(data=data, name='breweries')
+    data = Breweries()._make_request(endpoint=settings.BASE_URL)#_fetch_paginated(endpoint=settings.BASE_URL)
+    PandasBucket(name='bronze').write_json(data=data, name='breweries.json')
