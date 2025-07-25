@@ -22,6 +22,8 @@ dependencies = [
     "loguru (>=0.7.3,<0.8.0)",
     "streamlit (>=1.47.0,<2.0.0)",
     "plotly (>=6.2.0,<7.0.0)",
+    "mkdocs (>=1.6.1,<2.0.0)",
+    "mkdocs-material (>=9.6.15,<10.0.0)",
 ]
 
 

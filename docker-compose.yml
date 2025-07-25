@@ -1,35 +1,4 @@
 services:
-  # minio:
-  #   image: minio/minio
-  #   container_name: minio
-  #   environment:
-  #     MINIO_ROOT_USER: minioadmin
-  #     MINIO_ROOT_PASSWORD: minioadmin
-  #   volumes:
-  #     - minio-data:/data
-  #   ports:
-  #     - "9000:9000"
-  #     - "9001:9001"
-  #   command: server /data --console-address ":9001"
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
-  #     timeout: 20s
-  #     retries: 3
-
-  # minio-mc:
-  #   image: minio/mc:latest
-  #   container_name: minio-mc
-  #   depends_on:
-  #     - minio
-  #   entrypoint: >
-  #     sh -c "
-  #     sleep 10 &&
-  #     mc alias set myminio http://minio:9000 minioadmin minioadmin &&
-  #     mc mb myminio/bronze &&
-  #     mc mb myminio/silver &&
-  #     mc mb myminio/gold
-  #     "
-
   postgres-airflow:
     image: postgres:13
     container_name: postgres-airflow
@@ -48,7 +17,6 @@ services:
       dockerfile: airflow.Dockerfile
     container_name: airflow
     depends_on:
-#      - minio
       - postgres-airflow
     environment:
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
@@ -78,7 +46,20 @@ services:
         env_file:
           - .env
         volumes:
-          - ./data:/data  # <-- monta a pasta local ./data no caminho /data do container
+          - ./data:/data  # <-- monta a pasta local ./data no caminho /data do container (Espelho o dado do airflow para a pasta local)
+
+  mkdocs:
+    build:
+      context: .
+      dockerfile: mkdocs.Dockerfile
+    container_name: mkdocs
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docs:/docs/docs
+      - ./mkdocs.yml:/docs/mkdocs.yml
+    restart: unless-stopped
+
 
 volumes:
   #minio-data: # Volume do MinIO

@@ -1,0 +1,36 @@
+site_name: Data Engineering Case Bees
+site_description: Documentação técnica do projeto DE Case Bees
+site_author: Bruno Cardoso
+repo_url: https://github.com/imbrunoagc/de_case_bees
+repo_name: GitHub
+
+nav:
+  - Início: tabs_mkdocs/index.md
+  - Setup:
+      - Clonar Repositório: tabs_mkdocs/clone.md
+  - Documentação Técnica:
+      - Arquitetura: tabs_mkdocs/arquitetura.md
+      - Ferramentas: tabs_mkdocs/ferramentas.md
+      - DAGs: tabs_mkdocs/dags.md
+      - Medallion: tabs_mkdocs/medallion.md
+      - Streamlit: tabs_mkdocs/streamlit.md
+  - Referência:
+      - API: tabs_mkdocs/api.md
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
