@@ -78,6 +78,19 @@ A arquitetura proposta é a seguinte:
 
 ```
 
+## Requisito do projeto
+
+* ``Docker`` instalado na máquina
+* Construção do arquivo ``.env`` na raiz do projeto
+
+Abaixo está como o ``.env`` precisa estar construido.
+```bash
+# Variables of API
+BASE_URL = "https://api.openbrewerydb.org/v1/breweries"
+PER_PAGE = 200
+MAX_RETRIES = 3
+REQUEST_DELAY = 1.0
+```
 
 
 ## ✅ Setup do Projeto
