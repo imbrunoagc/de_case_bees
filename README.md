@@ -112,7 +112,7 @@ cd de_case_bees
 * MkDocs > 
 
 ### Visualização dos Containers
-<table><td><img src="docs/assets/img1_services_docker_desktop.png"></img></td></tr></table>
+<table><td><img src="docs/assets/img1_services_docker_desktop.PNG"></img></td></tr></table>
 
 
 ### Airflow
@@ -130,7 +130,7 @@ Acesse via: http://localhost:8080
 **Recuperação da senha:**
 <table>
     <td>
-    <img src="docs/assets/img2_service_airflow_get_password.png"
+    <img src="docs/assets/img2_service_airflow_get_password.PNG"
 ></img></td></tr>
 </table>
 
@@ -138,14 +138,14 @@ Acesse via: http://localhost:8080
 **Tela de Login**
 <table>
     <td>
-    <img src="docs/assets/img2_service_airflow_login.png"
+    <img src="docs/assets/img2_service_airflow_login.PNG"
 ></img></td></tr>
 </table>
 
 **DAG disponível**
 <table>
     <td>
-    <img src="docs/assets/img3_service_airflow_dag.png"
+    <img src="docs/assets/img3_service_airflow_dag.PNG"
 ></img></td></tr>
 </table>
 
@@ -157,7 +157,7 @@ Acesse via: http://localhost:8501
 ```A interface só será exibida após a ingestão de dados na camada gold.```
 <table>
     <td>
-    <img src="docs/assets/img4_service_streamlit.png"
+    <img src="docs/assets/img4_service_streamlit.PNG"
 ></img></td></tr>
 </table>
 
