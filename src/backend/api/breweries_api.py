@@ -4,14 +4,16 @@ import sys
 import requests
 import time
 
+from loguru import logger
+
 from typing import List, Dict, Optional
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
 sys.path.append(parent_dir)
 
-from backend.utils.logger import logger
-from backend.api.config.settings import settings
+from utils.logger import logger
+from api.config.settings import settings
 
 class Breweries:
     def __init__(self):
@@ -49,6 +51,8 @@ class Breweries:
                         params: Optional[Dict] = None
         ) -> List[Dict]:
         
+        logger.info("Realizar a coleta paginada da API (breweries)")
+
         """Estratégia básica de paginação"""
         all_data = []
         page = 1

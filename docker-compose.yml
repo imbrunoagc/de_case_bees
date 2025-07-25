@@ -1,0 +1,67 @@
+services:
+  postgres-airflow:
+    image: postgres:13
+    container_name: postgres-airflow
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  airflow:
+    build:
+      context: .
+      dockerfile: airflow.Dockerfile
+    container_name: airflow
+    depends_on:
+      - postgres-airflow
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__PLUGINS_FOLDER: /opt/airflow/plugins
+      AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
+    env_file:
+      - .env
+    command: ['airflow', 'standalone']
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/backend:/opt/airflow
+      - ./data:/data  # <-- monta a pasta local ./data no caminho /data do container
+
+  frontend-streamlit:
+        build:
+          context: .
+          dockerfile: streamlit.Dockerfile
+        container_name: frontend-streamlit
+        ports:
+          - "8501:8501"
+        depends_on:
+          - airflow
+        env_file:
+          - .env
+        volumes:
+          - ./data:/data  # <-- monta a pasta local ./data no caminho /data do container (Espelho o dado do airflow para a pasta local)
+
+  mkdocs:
+    build:
+      context: .
+      dockerfile: mkdocs.Dockerfile
+    container_name: mkdocs
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docs:/docs/docs
+      - ./mkdocs.yml:/docs/mkdocs.yml
+    restart: unless-stopped
+
+
+volumes:
+  #minio-data: # Volume do MinIO
+  #shared-data: # Volume compartilhado entre backend e frontend
+  postgres_data: # Volume do PostgreSQL
