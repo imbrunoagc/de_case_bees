@@ -1,0 +1,10 @@
+@startuml model_UML
+class Breweries {
+  +session: requests.Session
+
+  +_is_valid_api_response(data: List[Dict]): bool
+  +_make_request(endpoint: str, params: Optional[Dict])
+  +_fetch_paginated(endpoint: str, per_page: int, params: Optional[Dict])
+
+}
+@enduml

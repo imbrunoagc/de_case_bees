@@ -4,6 +4,8 @@ import sys
 import requests
 import time
 
+from loguru import logger
+
 from typing import List, Dict, Optional
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +51,8 @@ class Breweries:
                         params: Optional[Dict] = None
         ) -> List[Dict]:
         
+        logger.info("Realizar a coleta paginada da API (breweries)")
+
         """Estratégia básica de paginação"""
         all_data = []
         page = 1
