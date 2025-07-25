@@ -15,11 +15,9 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
 data_dir = os.path.abspath(os.path.join(current_dir, "..", "..", "..", "..", "data"))
 
-
 sys.path.append(parent_dir)
 
-from resources.duckdb_manager import create_duckdb_connection, execute_query
-from resources.s3_manager import PandasBucket
+from utils.functions import read_json
 from pipeline.layer2_silver.tdd import validate_and_convert_to_df # import do tdd (contrato de dados)
 
 def metadata(df: pd.DataFrame) -> pd.DataFrame:
@@ -52,7 +50,6 @@ class BreweryType(str, Enum): # Categorizando a coluna 'brewery_type'
     beergarden = "beergarden"
     location = "location"
 
-
 class Brewery(BaseModel):
     """
     Definição do esquema retornado da API para contrato de dados
@@ -79,10 +76,10 @@ def run_silver() -> None:
             
     # leitura do conteudo json baixado
     logger.info("Lendo 'breweries.json' do bucket 'bronze'.")
-    data = PandasBucket(name="breweries").read_json(name="bronze/breweries.json")
-
-    logger.info("Shape do dataframe derivado do JSON." )
-    print(data.shape)
+    data = read_json(
+        file_path=os.path.join(data_dir, "bronze"),
+        name_file="breweries"
+        )
     
     # Chamada da função de vdt
     logger.info("Validando dados e convertendo para DataFrame." )
@@ -107,24 +104,25 @@ def run_silver() -> None:
     # Create DuckDB connection
     duckdb_conn = None
     try:
-        duckdb_conn = create_duckdb_connection()
-        
+        #duckdb_conn = create_duckdb_connection()
+
+        duckdb_conn = duckdb.connect()
         duckdb_conn.register("df_view", df)
         logger.info("DataFrame registrado como 'df_view' no DuckDB.")
 
-        s3_target_path = 's3://silver/breweries'
+        silver_path = os.path.join(data_dir, "silver", "breweries_to_silver")
 
         # Query para salvar os dados particionados, agora com ALLOW_OVERWRITE
         query = f"""
-            COPY df_view TO '{s3_target_path}' (
+            COPY df_view TO '{silver_path}' (
                 FORMAT PARQUET,
                 PARTITION_BY (country, state),
                 OVERWRITE_OR_IGNORE
             );
         """
         
-        logger.info("Executando a query COPY para salvar dados no MinIO em: %s", s3_target_path)
-        execute_query(duckdb_conn, query)
+        logger.info(f"Executando a query COPY para salvar dados no MinIO em: {silver_path}")
+        duckdb_conn.execute(query)
         logger.info("Dados salvos com sucesso no formato Parquet particionado.")
 
     except Exception as e:
