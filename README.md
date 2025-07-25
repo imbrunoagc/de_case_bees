@@ -1,29 +1,29 @@
-# Case Data Engineering Bees
+# 🍻 Data Engineering Case Bees
 Este projeto de arquitetura open source tem como foco a coleta de Breweries da ``Open Breweriy DB``, com armazenamento em um ``data lake`` e exibição em um dashboard interativo. A construção visa boas práticas e clareza em todos os aspectos, da arquitetura à escrita do código.
 
 ### Objetivos:
 * Implementar um data lake seguindo a arquitetura ``medallion``.
 * Utilizar frameworks que seja compreensivel e simples na resolução do case.
 * Armazenar os dados na camada Bronze em formato JSON com Python.
-* Realizar transformações nas camadas Silver e Gold com ``pandas`` salvando no formato Parquet.
+* Realizar transformações nas camadas Silver e Gold com ``Pandas e DuckDB`` salvando no formato Parquet.
 * Utilizar o airflow para orquestrar as ``camadas``.
-* Escrever *testes unitários* utilizando ``pytest``.
+* Utlizar o ```Loguru``` para dar visibilidade em cada etapa do projeto.
 * Criar um dashboard com ``Streamlit`` para visualização gráfica dos dados da camada Gold.
 * Subir todos os serviços via ``Docker``.
 
 A arquitetura proposta é a seguinte:
 <table>
     <td>
-    <img src="docs/architecture/architecture-version-1.png"
+    <img src="docs/architecture/architecture-version-3.png"
 ></img></td></tr>
 </table>
 
 **Principais ferramentas utilizadas no projeto:**  
 - **Apache Airflow**: Responsável por orquestrar pipelines de dados, automatizando tarefas e seus agendamentos;  
 - **MinIO**: Armazenamento de objetos gratuito usado para guardar e organizar os dados;  
-- **Pandas**: Biblioteca Python usada para processar, transformar e analisar os dados;  
+- **Pandas e DuckDB**: Bibliotecas utilizadas para processar, transformar e analisar os dados;
 - **Docker**: Plataforma para criar e gerenciar containers, garantindo que os serviços rodem de forma consistente;  
-- **Streamlit**: Utilizado para criar interfaces simples e rápidas para visualização de dados.  
+- **Streamlit**: Utilizado para criar interfaces simples e rápidas para visualização de dados.
 
 ## Descrição da Estrutura do Projeto
 * `.git` - Controle de versão.
@@ -42,71 +42,132 @@ A arquitetura proposta é a seguinte:
 
 ```bash
 |
-|── .devcontainer/
-|── .dockerignore
-|── .docker-compose.yml
 |── .gitignore
 |── .python-version
 |── requirements.txt
+|── requirements-frontend.txt
 |── poetry.lock
 |── pyproject.toml
 |── README.md
-|── config_airflow/
-|   └── airflow.Dockerfile
-|── data/
-|── docs/
-|── frontend/
-|   |── components/
-|   |       |── footer.py
-|   |       └── inputs_css.py
-|   |── configs/
-|   |       └── settings_page.py
-|   |── app.py
-|   |── Dockerfile.py
-|   └── requirements.txt
-|── notebook/
-|── src/
-|   └── airflow/
-|          └── dags/
-|                |── resources/
-|                |   |── __init__.py
-|                |   └── minio_manager.py
-|                |── scrapy/
-|                |   |── __init__.py
-|                |   |── collect.py
-|                |   └── paramns.py
-|                |── tools/
-|                |   |── transform.py
-|                |   └── rules_gold.py
-|                |── __init__.py
-|                |── bronze.py
-|                |── silver.py
-|                |── gold.py
-|                └── TaskGroup.py
 |
-└── tests/
-        |── test_1.py
-        └── test_2.py
+|── data/
+|   |── bronze/
+|   |── silver/
+|   └── gold/
+|
+|── docs/
+|   |── architecture/
+|   └── assets/
+|
+|── src/
+|   |── backend/
+|   |       |── airflow/
+|   |       |── api/
+|   |       |── dags/
+|   |       |── pipeline/
+|   |       └── utils/
+|   |
+|   └── frontend
+|           └── app.py
+|
+|
+|── .dockerignore
+|── .docker-compose.yml
+|── airflow.Dockerfile
+└── streamlit.Dockerfile
+
+
 ```
 
-## Setup do Projeto
 
-#### **1. Clone o repositório**
+
+## ✅ Setup do Projeto
+
+### 1. Clone o repositório
+
+**HTTPS**
 ```bash
-> git clone https://github.com/imbrunoagc/data-resident-evil.git
-> cd data-resident-evil
+#### **1. Clone o repositório em HTTPS
+git clone https://github.com/imbrunoagc/de_case_bees.git
+cd de_case_bees
 ```
 
-#### **2. Execute o projeto**
+ou via, **SSH**.
+
+```bash
+#### **2. Clone o repositório em SSH**
+git clone git@github.com:imbrunoagc/de_case_bees.git
+cd de_case_bees
+```
+
+#### **3. Execute o projeto**
 ```bash
 > docker-compose up --build
 ``` 
 
+#### **📦 4. Serviços Disponíveis**
+* Mini IO > ````Não implementado nessa branch````
+* Airflow > http://localhost:8080/
+* Streamlit > http://localhost:8501/
+* MkDocs > 
 
-#### **3. Serviços implementados**
+### Visualização dos Containers
+<table><td><img src="docs/assets/img1_services_docker_desktop.png"></img></td></tr></table>
 
-* MiniIO > http://127.0.0.1:9001/
-* Airflow > http://127.0.0.1:8080/
-* Prometheus > http://127.0.0.1:9090/
-* Streamlit > http://127.0.0.1:9000/
-* MkDocs > i do not
+
+### Airflow
+
+Acesse via: http://localhost:8080
+
+**Credenciais de acesso:**
+
+* **Usuário:** ``admin``
+* **Senha:** gerada automaticamente em
+``src/backend/standalone_admin_password.txt``
+
+```⚠️ A cada rebuild do docker-compose, a senha é regenerada.```
+
+**Recuperação da senha:**
+<table>
+    <td>
+    <img src="docs/assets/img2_service_airflow_get_password.png"
+></img></td></tr>
+</table>
+
+
+**Tela de Login**
+<table>
+    <td>
+    <img src="docs/assets/img2_service_airflow_login.png"
+></img></td></tr>
+</table>
+
+**DAG disponível**
+<table>
+    <td>
+    <img src="docs/assets/img3_service_airflow_dag.png"
+></img></td></tr>
+</table>
+
+
+### Streamlit
+
+Acesse via: http://localhost:8501
+
+```A interface só será exibida após a ingestão de dados na camada gold.```
+<table>
+    <td>
+    <img src="docs/assets/img4_service_streamlit.png"
+></img></td></tr>
+</table>
+
+
+#### MkDocks
+
+Utilizado para formatação e visualização da documentação técnica do projeto.
+<table>
+    <td>
+    <img src="docs/ssets/.png"
+></img></td></tr>
+</table>
+
