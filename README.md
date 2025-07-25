@@ -165,7 +165,7 @@ Acesse via: http://localhost:8501
 Utilizado para formatação e visualização da documentação técnica do projeto.
 <table>
     <td>
-    <img src="docs/ssets/.png"
+    <img src="docs/assets/img7_mkdocs.PNG"
 ></img></td></tr>
 </table>
 
