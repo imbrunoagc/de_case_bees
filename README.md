@@ -106,10 +106,9 @@ cd de_case_bees
 ``` 
 
 #### **📦 4. Serviços Disponíveis**
-* Mini IO > ````Não implementado nessa branch````
 * Airflow > http://localhost:8080/
 * Streamlit > http://localhost:8501/
-* MkDocs > 
+* MkDocs > http://localhost:8000/
 
 ### Visualização dos Containers
 <table><td><img src="docs/assets/img1_services_docker_desktop.PNG"></img></td></tr></table>
